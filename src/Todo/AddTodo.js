@@ -3,12 +3,18 @@ import PropTypes from 'prop-types'
 
 
 function useInputValue (defaltValue = '') {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(defaltValue)
+
+    return {
+        value, 
+        onChange: event => setValue(event.target.value)
+    }
 
 }
 
 
 function AddTodo({onCreate}) {
+    const input = useInputValue('')
 
     function submitHandler(event) {
         event.preventDefault()
@@ -21,7 +27,7 @@ function AddTodo({onCreate}) {
 
     return (
         <form style={{marginBottom: '1rem'}} onSubmit={submitHandler}>
-            <input value={value} onChange={event => setValue(event.target.value)} />
+            <input {...input} />
             <button type='submit'>Add todo</button>
         </form>
     )
