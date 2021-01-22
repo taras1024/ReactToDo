@@ -2,11 +2,13 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
 
+function useInputValue (defaltValue = '') {
+    const [value, setValue] = useState('')
 
+}
 
 
 function AddTodo({onCreate}) {
-    const [value, setValue] = useState('')
 
     function submitHandler(event) {
         event.preventDefault()
