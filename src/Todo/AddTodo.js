@@ -1,17 +1,18 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
-
 function useInputValue (defaltValue = '') {
     const [value, setValue] = useState(defaltValue)
 
     return {
-        value, 
-        onChange: event => setValue(event.target.value)
+        bind: {
+            value, 
+            onChange: event => setValue(event.target.value)
+        },
+        clear: () => setValue(''),
+        value: () => value
     }
-
 }
-
 
 function AddTodo({onCreate}) {
     const input = useInputValue('')
@@ -19,15 +20,15 @@ function AddTodo({onCreate}) {
     function submitHandler(event) {
         event.preventDefault()
 
-        if(value.trim()) {
-            onCreate(value)
-            setValue('')
+        if(input.value().trim()) {
+            onCreate(input.value())
+            input.clear()
         }
     }
 
     return (
         <form style={{marginBottom: '1rem'}} onSubmit={submitHandler}>
-            <input {...input} />
+            <input {...input.bind} />
             <button type='submit'>Add todo</button>
         </form>
     )
